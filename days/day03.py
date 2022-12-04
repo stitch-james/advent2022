@@ -39,8 +39,3 @@ def priority(item: str) -> int:
         return ord(item) - ord('a') + 1
     # Upper case letters have priority 27-52
     return ord(item) - ord('A') + 27
-
-
-if __name__ == '__main__':
-    print(part1())
-    print(part2())

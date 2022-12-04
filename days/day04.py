@@ -24,8 +24,3 @@ def part2() -> int:
 def process_ranges(row: str) -> tuple[tuple[int, int], tuple[int, int]]:
     """Turn the ranges string into the min/max section IDs for each elf."""
     return tuple(tuple(int(value) for value in elf.split('-')) for elf in row.split(','))
-
-
-if __name__ == '__main__':
-    print(part1())
-    print(part2())

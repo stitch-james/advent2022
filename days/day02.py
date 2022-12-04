@@ -80,8 +80,3 @@ def select_option(theirs: Options, desired: Outcomes) -> Options:
         if beats[theirs] == option and desired == Outcomes.LOSE:
             return option
     raise RuntimeError('Uh-oh')
-
-
-if __name__ == '__main__':
-    print(part1())
-    print(part2())

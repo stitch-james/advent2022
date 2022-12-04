@@ -15,8 +15,3 @@ def part2() -> int:
     all_calories = utils.read_input(day=1, processor=int, split_groups=True)
     per_elf = [sum(calories) for calories in all_calories]
     return sum(sorted(per_elf)[-3:])
-
-
-if __name__ == '__main__':
-    print(part1())
-    print(part2())
