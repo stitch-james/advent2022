@@ -5,7 +5,10 @@ import utils
 
 def process_ranges(row: str) -> tuple[tuple[int, int], tuple[int, int]]:
     """Turn the ranges string into the min/max section IDs for each elf."""
-    return tuple(tuple(int(value) for value in elf.split('-')) for elf in row.split(','))
+    elf_a, elf_b = row.split(',')
+    min_a, max_a = elf_a.split('-')
+    min_b, max_b = elf_b.split('-')
+    return ((int(min_a), int(max_a)), (int(min_b), int(max_b)))
 
 
 INPUT_OPTIONS = utils.InputOptions(
