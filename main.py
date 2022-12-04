@@ -3,14 +3,17 @@
 import importlib
 import sys
 
+import utils
+
 
 def main(day: int) -> None:
     """Import and run the requested day, both parts."""
     print(f'Day {day}:')
-    day_module = importlib.import_module(f'days.day{day:02}')
+    module = importlib.import_module(f'days.day{day:02}')
+    data = utils.read_input(day=day, options=module.INPUT_OPTIONS)
     for part in 1, 2:
-        if hasattr(day_module, f'part{part}'):
-            result = getattr(day_module, f'part{part}')()
+        if hasattr(module, f'part{part}'):
+            result = getattr(module, f'part{part}')(data)
         else:
             result = 'Not found'
         print(f'  Part {part}: {result}')

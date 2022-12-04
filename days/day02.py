@@ -52,15 +52,20 @@ scores_outcomes = {
 }
 
 
-def part1() -> int:
+INPUT_OPTIONS = utils.InputOptions(
+    processor=lambda row: row.split(),
+)
+
+
+def part1(raw_strategy: list[list[str]]) -> int:
     """Day 2, part 1."""
-    strategy = utils.read_input(day=2, processor=lambda row: [letters_p1[char] for char in row.split()])
+    strategy = [[letters_p1[char] for char in row] for row in raw_strategy]
     return sum(score(theirs, mine) for theirs, mine in strategy)
 
 
-def part2() -> int:
+def part2(raw_strategy: list[list[str]]) -> int:
     """Day 2, part 2."""
-    strategy = utils.read_input(day=2, processor=lambda row: [letters_p2[char] for char in row.split()])
+    strategy = [[letters_p2[char] for char in row] for row in raw_strategy]
     return sum(score(theirs, select_option(theirs, desired)) for theirs, desired in strategy)
 
 

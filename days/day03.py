@@ -3,31 +3,35 @@
 import utils
 
 
-def part1() -> int:
+def split_row(row: str) -> tuple[set[str], set[str]]:
+    """Split the row into the two compartments."""
+    half = int(len(row) / 2)
+    return set(row[:half]), set(row[half:])
+
+
+INPUT_OPTIONS = utils.InputOptions(
+    processor=split_row,
+)
+
+
+def part1(contents_split: list[tuple[set[str], set[str]]]) -> int:
     """Day 3, part 1."""
-    contents = utils.read_input(day=3, processor=split_row)
     result = 0
-    for first, second in contents:
+    for first, second in contents_split:
         overlap = (first & second).pop()
         result += priority(overlap)
     return result
 
 
-def part2() -> int:
+def part2(contents_split: list[tuple[set[str], set[str]]]) -> int:
     """Day 3, part 2."""
-    contents = utils.read_input(day=3, processor=set)
+    contents = [first | second for first, second in contents_split]
     result = 0
     for idx in range(0, len(contents), 3):
         first, second, third = contents[idx : idx + 3]
         overlap = (first & second & third).pop()
         result += priority(overlap)
     return result
-
-
-def split_row(row: str) -> tuple[set[str], set[str]]:
-    """Split the row into the two compartments."""
-    half = int(len(row) / 2)
-    return set(row[:half]), set(row[half:])
 
 
 def priority(item: str) -> int:

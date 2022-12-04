@@ -1,6 +1,8 @@
 import importlib
 import unittest
 
+import utils
+
 
 EXPECTED = {
     1: {1: 70698, 2: 206643},
@@ -14,10 +16,11 @@ class TestAll(unittest.TestCase):
 
     def test_all_days(self):
         for day in range(1, 26):
-            for part in range(1, 3):
+            module = importlib.import_module(f'days.day{day:02}')
+            data = utils.read_input(day=day, options=module.INPUT_OPTIONS)
+            for part in 1, 2:
                 with self.subTest(day=f'{day:02}', part=part):
-                    module = importlib.import_module(f'days.day{day:02}')
                     func = getattr(module, f'part{part}')
-                    result = func()
+                    result = func(data)
                     self.assertIsNot(result, None)
                     self.assertEqual(result, EXPECTED.get(day, {}).get(part))

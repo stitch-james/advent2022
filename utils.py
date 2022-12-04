@@ -1,15 +1,25 @@
 """IO and utils functions."""
 
+import dataclasses
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Callable
 
 
-def read_input(day: int, processor: Optional[Callable] = int, split_groups: bool = False) -> list:
+def noop(row: str) -> str:
+    """Do nothing."""
+    return row
+
+
+@dataclasses.dataclass
+class InputOptions:
+    processor: Callable = noop
+    split_groups: bool = False
+
+
+def read_input(day: int, options: InputOptions) -> list:
     """Read from file and process input."""
-    if processor is None:
-        processor = lambda row: row
     raw = (Path(__file__).parent / 'data' / f'day{day:02}.txt').read_text().strip()
-    if split_groups:
-        return [[processor(item) for item in group.split('\n')] for group in raw.split('\n\n')]
+    if options.split_groups:
+        return [[options.processor(item) for item in group.split('\n')] for group in raw.split('\n\n')]
     else:
-        return [processor(item) for item in raw.split('\n')]
+        return [options.processor(item) for item in raw.split('\n')]
