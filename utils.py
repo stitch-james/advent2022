@@ -14,13 +14,16 @@ def noop(row: str) -> str:
 class InputOptions:
     processor: Callable = noop
     split_groups: bool = False
+    process_as_group: bool = False
     single_row: bool = False
 
 
-def read_input(day: int, options: InputOptions) -> list:
+def read_input(path: Path, options: InputOptions) -> list:
     """Read from file and process input."""
-    raw = (Path(__file__).parent / 'data' / f'day{day:02}.txt').read_text().strip()
-    if options.split_groups:
+    raw = path.read_text().strip()
+    if options.process_as_group:
+        return [options.processor(group) for group in raw.split('\n\n')]
+    elif options.split_groups:
         return [[options.processor(item) for item in group.split('\n')] for group in raw.split('\n\n')]
     elif options.single_row:
         return options.processor(raw.strip())

@@ -1,4 +1,7 @@
+"""Regression test."""
+
 import importlib
+from pathlib import Path
 import unittest
 
 import utils
@@ -13,6 +16,9 @@ EXPECTED = {
     6: {1: 1896, 2: 3452},
     7: {1: 1886043, 2: 3842121},
     8: {1: 1719, 2: 590824},
+    9: {1: 6057, 2: 2514},
+    10: {1: 11220, 2: 'BZPAJELK'},
+    11: {1: 50616, 2: 11309046332},
 }
 
 
@@ -21,10 +27,11 @@ class TestAll(unittest.TestCase):
     def test_all_days(self):
         for day in range(1, 26):
             module = importlib.import_module(f'days.day{day:02}')
-            data = utils.read_input(day=day, options=module.INPUT_OPTIONS)
+            path = Path(__file__).parent / 'data' / f'day{day:02}.txt'
             for part in 1, 2:
                 with self.subTest(day=f'{day:02}', part=part):
                     func = getattr(module, f'part{part}')
+                    data = utils.read_input(path=path, options=module.INPUT_OPTIONS)
                     result = func(data)
                     self.assertIsNot(result, None)
                     self.assertEqual(result, EXPECTED.get(day, {}).get(part))
