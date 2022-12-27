@@ -26,6 +26,6 @@ def read_input(path: Path, options: InputOptions) -> list:
     elif options.split_groups:
         return [[options.processor(item) for item in group.split('\n')] for group in raw.split('\n\n')]
     elif options.single_row:
-        return options.processor(raw.strip())
+        return options.processor(raw)
     else:
         return [options.processor(item) for item in raw.split('\n')]
