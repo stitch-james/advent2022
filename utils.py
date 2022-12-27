@@ -20,7 +20,7 @@ class InputOptions:
 
 def read_input(path: Path, options: InputOptions) -> list:
     """Read from file and process input."""
-    raw = path.read_text().strip()
+    raw = path.read_text().strip('\n')
     if options.process_as_group:
         return [options.processor(group) for group in raw.split('\n\n')]
     elif options.split_groups:
