@@ -32,6 +32,7 @@ EXPECTED = {
     22: {1: 75254, 2: 108311},
     23: {1: 4158, 2: 1014},
     24: {1: 269, 2: 825},
+    25: {1: '2=020-===0-1===2=020'},
 }
 
 
@@ -43,6 +44,8 @@ class TestAll(unittest.TestCase):
             path = Path(__file__).parent / 'data' / f'day{day:02}.txt'
             for part in 1, 2:
                 with self.subTest(day=f'{day:02}', part=part):
+                    if day == 25 and part == 2:
+                        continue
                     func = getattr(module, f'part{part}')
                     data = utils.read_input(path=path, options=module.INPUT_OPTIONS)
                     result = func(data)
